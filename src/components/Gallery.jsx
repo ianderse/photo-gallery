@@ -23,14 +23,38 @@ function GalleryItem({ item, isReversed }) {
 
     const video = videoRef.current;
 
+    // Add error handler
+    const handleError = (e) => {
+      console.error('Video error:', e);
+      console.error('Video error code:', video.error?.code);
+      console.error('Video error message:', video.error?.message);
+      setShowControls(true);
+    };
+
+    const handleLoadedMetadata = () => {
+      console.log('Video metadata loaded');
+    };
+
+    const handleLoadedData = () => {
+      console.log('Video data loaded');
+    };
+
+    video.addEventListener('error', handleError);
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    video.addEventListener('loadeddata', handleLoadedData);
+
     if (isInView) {
+      console.log('Video in view, readyState:', video.readyState);
+
       // Load the video if not already loaded (important for mobile)
       if (video.readyState === 0) {
+        console.log('Loading video...');
         video.load();
       }
 
       // Ensure video is ready before playing
       if (video.readyState >= 3) {
+        console.log('Video ready, attempting play...');
         video.play().catch((error) => {
           console.log('Autoplay prevented:', error);
           // Show controls if autoplay fails (common on mobile)
@@ -38,6 +62,7 @@ function GalleryItem({ item, isReversed }) {
         });
       } else {
         const playWhenReady = () => {
+          console.log('Video canplay event fired, attempting play...');
           video.play().catch((error) => {
             console.log('Autoplay prevented:', error);
             // Show controls if autoplay fails (common on mobile)
@@ -48,11 +73,20 @@ function GalleryItem({ item, isReversed }) {
 
         return () => {
           video.removeEventListener('canplay', playWhenReady);
+          video.removeEventListener('error', handleError);
+          video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+          video.removeEventListener('loadeddata', handleLoadedData);
         };
       }
     } else {
       video.pause();
     }
+
+    return () => {
+      video.removeEventListener('error', handleError);
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      video.removeEventListener('loadeddata', handleLoadedData);
+    };
   }, [isInView, isVideoMedia]);
 
   const imageVariants = {
