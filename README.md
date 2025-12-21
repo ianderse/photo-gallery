@@ -5,6 +5,7 @@ An elegant, editorial-style photo gallery with smooth scroll animations and alte
 ## Features
 
 - **Alternating split layout** — Images and text alternate sides as you scroll
+- **Video support** — Videos autoplay (muted) when scrolled into view
 - **Subtle fade animations** — Elements gracefully animate into view
 - **Fully responsive** — Stacks to single column on mobile
 - **Easy customization** — Just edit one data file to add your photos
@@ -36,24 +37,42 @@ export const galleryConfig = {
 };
 ```
 
-### Add or Edit Images
+### Add Images or Videos
 
 Each gallery item follows this structure:
 
 ```js
 {
   id: 1,                           // Unique identifier
-  image: "https://...",            // Image URL (or local path)
-  title: "Image Title",            // Main heading
-  subtitle: "Location — 2024",     // Optional: date, location, etc.
+  image: "https://...",            // Image or video URL
+  title: "Title",                  // Main heading
   description: "Your description text goes here...",
-  tags: ["Tag1", "Tag2"]           // Optional: array of tags
+  poster: "https://..."            // Optional: thumbnail for videos
 }
 ```
 
-### Using Local Images
+### Video Support
 
-1. Add images to `public/images/`
+Videos are automatically detected by file extension (`.mp4`, `.webm`, `.ogg`, `.mov`).
+
+- Videos autoplay when scrolled into view
+- Videos pause when scrolled out of view
+- Videos are muted and loop by default
+- Optional `poster` property sets a thumbnail image
+
+```js
+{
+  id: 2,
+  image: "/videos/my-video.mp4",   // Video file
+  title: "Motion Study",
+  description: "A short film exploring movement.",
+  poster: "/images/video-thumb.jpg" // Optional thumbnail
+}
+```
+
+### Using Local Files
+
+1. Add images/videos to `public/images/` or `public/videos/`
 2. Reference them like: `image: "/images/your-photo.jpg"`
 
 ## Customizing Styles
@@ -104,7 +123,8 @@ vercel
 ```
 photo-gallery/
 ├── public/
-│   └── images/          # Put your local images here
+│   ├── images/          # Local images
+│   └── videos/          # Local videos
 ├── src/
 │   ├── components/
 │   │   ├── Gallery.jsx  # Main gallery component

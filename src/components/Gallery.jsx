@@ -1,10 +1,44 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import './Gallery.css';
 
-function GalleryItem({ item, index, isReversed }) {
+function isVideo(src) {
+  if (!src) return false;
+  const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
+  const lowercaseSrc = src.toLowerCase();
+  return videoExtensions.some(ext => lowercaseSrc.includes(ext));
+}
+
+function GalleryItem({ item, isReversed }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const videoRef = useRef(null);
+  const isInView = useInView(ref, { once: false, amount: 0.33 });
+  const isInViewOnce = useInView(ref, { once: true, margin: "-100px" });
+  const isVideoMedia = isVideo(item.image);
+
+  // Handle video autoplay based on visibility
+  useEffect(() => {
+    if (!videoRef.current || !isVideoMedia) return;
+
+    const video = videoRef.current;
+
+    if (isInView) {
+      // Ensure video is ready before playing
+      if (video.readyState >= 3) {
+        video.play().catch((error) => {
+          console.log('Autoplay prevented:', error);
+        });
+      } else {
+        video.addEventListener('canplay', () => {
+          video.play().catch((error) => {
+            console.log('Autoplay prevented:', error);
+          });
+        }, { once: true });
+      }
+    } else {
+      video.pause();
+    }
+  }, [isInView, isVideoMedia]);
 
   const imageVariants = {
     hidden: { opacity: 0, scale: 1.02 },
@@ -24,8 +58,6 @@ function GalleryItem({ item, index, isReversed }) {
     }
   };
 
-  const indexNumber = String(index + 1).padStart(2, '0');
-
   return (
     <section 
       ref={ref}
@@ -34,38 +66,40 @@ function GalleryItem({ item, index, isReversed }) {
       <motion.div 
         className="gallery-item__image-container"
         initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
+        animate={isInViewOnce ? "visible" : "hidden"}
         variants={imageVariants}
       >
         <div className="gallery-item__image-wrapper">
-          <img 
-            src={item.image} 
-            alt={item.title}
-            className="gallery-item__image"
-            loading="lazy"
-          />
+          {isVideoMedia ? (
+            <video
+              ref={videoRef}
+              src={item.image}
+              className="gallery-item__media gallery-item__video"
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={item.poster}
+            />
+          ) : (
+            <img 
+              src={item.image} 
+              alt={item.title}
+              className="gallery-item__media gallery-item__image"
+              loading="lazy"
+            />
+          )}
         </div>
       </motion.div>
 
       <motion.div 
         className="gallery-item__content"
         initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
+        animate={isInViewOnce ? "visible" : "hidden"}
         variants={textVariants}
       >
-        <span className="gallery-item__index">{indexNumber}</span>
         <h2 className="gallery-item__title">{item.title}</h2>
-        {item.subtitle && (
-          <span className="gallery-item__subtitle">{item.subtitle}</span>
-        )}
         <p className="gallery-item__description">{item.description}</p>
-        {item.tags && (
-          <div className="gallery-item__tags">
-            {item.tags.map((tag, i) => (
-              <span key={i} className="gallery-item__tag">{tag}</span>
-            ))}
-          </div>
-        )}
       </motion.div>
     </section>
   );
@@ -87,7 +121,6 @@ function Gallery({ items, title, subtitle }) {
           <GalleryItem 
             key={item.id || index}
             item={item}
-            index={index}
             isReversed={index % 2 === 1}
           />
         ))}
