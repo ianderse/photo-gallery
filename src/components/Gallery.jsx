@@ -23,17 +23,27 @@ function GalleryItem({ item, isReversed }) {
     const video = videoRef.current;
 
     if (isInView) {
+      // Load the video if not already loaded (important for mobile)
+      if (video.readyState === 0) {
+        video.load();
+      }
+
       // Ensure video is ready before playing
       if (video.readyState >= 3) {
         video.play().catch((error) => {
           console.log('Autoplay prevented:', error);
         });
       } else {
-        video.addEventListener('canplay', () => {
+        const playWhenReady = () => {
           video.play().catch((error) => {
             console.log('Autoplay prevented:', error);
           });
-        }, { once: true });
+        };
+        video.addEventListener('canplay', playWhenReady, { once: true });
+
+        return () => {
+          video.removeEventListener('canplay', playWhenReady);
+        };
       }
     } else {
       video.pause();
@@ -78,8 +88,9 @@ function GalleryItem({ item, isReversed }) {
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="auto"
               poster={item.poster}
+              webkit-playsinline="true"
             />
           ) : (
             <img 
