@@ -12,7 +12,9 @@ function isVideo(src) {
 function GalleryItem({ item, isReversed }) {
   const ref = useRef(null);
   const videoRef = useRef(null);
-  const [showControls, setShowControls] = useState(false);
+  // Detect mobile and show controls by default on mobile
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const [showControls, setShowControls] = useState(isMobile);
   const isInView = useInView(ref, { once: false, amount: 0.33 });
   const isInViewOnce = useInView(ref, { once: true, margin: "-100px" });
   const isVideoMedia = isVideo(item.image);
@@ -52,34 +54,39 @@ function GalleryItem({ item, isReversed }) {
         video.load();
       }
 
-      // Ensure video is ready before playing
-      if (video.readyState >= 3) {
-        console.log('Video ready, attempting play...');
-        video.play().catch((error) => {
-          console.log('Autoplay prevented:', error);
-          // Show controls if autoplay fails (common on mobile)
-          setShowControls(true);
-        });
-      } else {
-        const playWhenReady = () => {
-          console.log('Video canplay event fired, attempting play...');
+      // Only attempt autoplay on desktop
+      if (!isMobile) {
+        // Ensure video is ready before playing
+        if (video.readyState >= 3) {
+          console.log('Video ready, attempting play...');
           video.play().catch((error) => {
             console.log('Autoplay prevented:', error);
-            // Show controls if autoplay fails (common on mobile)
+            // Show controls if autoplay fails
             setShowControls(true);
           });
-        };
-        video.addEventListener('canplay', playWhenReady, { once: true });
+        } else {
+          const playWhenReady = () => {
+            console.log('Video canplay event fired, attempting play...');
+            video.play().catch((error) => {
+              console.log('Autoplay prevented:', error);
+              // Show controls if autoplay fails
+              setShowControls(true);
+            });
+          };
+          video.addEventListener('canplay', playWhenReady, { once: true });
 
-        return () => {
-          video.removeEventListener('canplay', playWhenReady);
-          video.removeEventListener('error', handleError);
-          video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-          video.removeEventListener('loadeddata', handleLoadedData);
-        };
+          return () => {
+            video.removeEventListener('canplay', playWhenReady);
+            video.removeEventListener('error', handleError);
+            video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+            video.removeEventListener('loadeddata', handleLoadedData);
+          };
+        }
       }
     } else {
-      video.pause();
+      if (!isMobile) {
+        video.pause();
+      }
     }
 
     return () => {
