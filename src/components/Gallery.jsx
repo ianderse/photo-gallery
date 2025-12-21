@@ -12,18 +12,31 @@ function isVideo(src) {
 function GalleryItem({ item, isReversed }) {
   const ref = useRef(null);
   const videoRef = useRef(null);
-  // Detect mobile and show controls by default on mobile
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  const [showControls, setShowControls] = useState(isMobile);
+  const [showControls, setShowControls] = useState(true); // Always show controls initially
+  const [isMobile, setIsMobile] = useState(false);
   const isInView = useInView(ref, { once: false, amount: 0.33 });
   const isInViewOnce = useInView(ref, { once: true, margin: "-100px" });
   const isVideoMedia = isVideo(item.image);
+
+  // Detect mobile on client side only
+  useEffect(() => {
+    const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    setIsMobile(mobile);
+    console.log('Is mobile:', mobile);
+    if (isVideoMedia) {
+      console.log('Video item.image:', item.image);
+    }
+  }, []);
 
   // Handle video autoplay based on visibility
   useEffect(() => {
     if (!videoRef.current || !isVideoMedia) return;
 
     const video = videoRef.current;
+
+    console.log('Video element:', video);
+    console.log('Video src:', video.src);
+    console.log('Video currentSrc:', video.currentSrc);
 
     // Add error handler
     const handleError = (e) => {
@@ -94,7 +107,7 @@ function GalleryItem({ item, isReversed }) {
       video.removeEventListener('loadedmetadata', handleLoadedMetadata);
       video.removeEventListener('loadeddata', handleLoadedData);
     };
-  }, [isInView, isVideoMedia]);
+  }, [isInView, isVideoMedia, isMobile]);
 
   const imageVariants = {
     hidden: { opacity: 0, scale: 1.02 },
