@@ -129,16 +129,16 @@ function GalleryItem({ item, isReversed }) {
           {isVideoMedia ? (
             <video
               ref={videoRef}
-              src={item.image}
               className="gallery-item__media gallery-item__video"
               muted
               loop
               playsInline
               preload="auto"
-              poster={item.poster}
-              webkit-playsinline="true"
               controls={showControls}
-            />
+            >
+              <source src={item.image} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           ) : (
             <img 
               src={item.image} 

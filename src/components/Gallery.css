@@ -110,6 +110,15 @@
   background-color: var(--color-bg-alt);
 }
 
+/* Ensure video controls are visible and video renders properly on mobile */
+.gallery-item__video::-webkit-media-controls {
+  display: flex !important;
+}
+
+.gallery-item__video::-webkit-media-controls-enclosure {
+  display: flex !important;
+}
+
 /* Content */
 .gallery-item__content {
   display: flex;
@@ -196,34 +205,40 @@
     grid-template-columns: 1fr;
     min-height: auto;
   }
-  
+
   .gallery-item,
   .gallery-item--reversed {
     direction: ltr;
   }
-  
+
   .gallery-item__image-container {
     aspect-ratio: 4 / 3;
     position: relative;
   }
-  
+
   .gallery-item__image-wrapper {
     inset: var(--space-sm);
   }
-  
+
+  /* Fix for video rendering on mobile */
+  .gallery-item__video {
+    min-height: 200px;
+    background-color: #000;
+  }
+
   .gallery-item__content {
     padding: var(--space-lg) var(--space-md);
     max-width: none;
   }
-  
+
   .gallery-item--reversed .gallery-item__content {
     margin-left: 0;
   }
-  
+
   .gallery-item__description {
     max-width: none;
   }
-  
+
   .gallery__header {
     padding: var(--space-lg) var(--space-md);
   }
