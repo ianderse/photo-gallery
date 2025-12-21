@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import './Gallery.css';
 
@@ -12,6 +12,7 @@ function isVideo(src) {
 function GalleryItem({ item, isReversed }) {
   const ref = useRef(null);
   const videoRef = useRef(null);
+  const [showControls, setShowControls] = useState(false);
   const isInView = useInView(ref, { once: false, amount: 0.33 });
   const isInViewOnce = useInView(ref, { once: true, margin: "-100px" });
   const isVideoMedia = isVideo(item.image);
@@ -32,11 +33,15 @@ function GalleryItem({ item, isReversed }) {
       if (video.readyState >= 3) {
         video.play().catch((error) => {
           console.log('Autoplay prevented:', error);
+          // Show controls if autoplay fails (common on mobile)
+          setShowControls(true);
         });
       } else {
         const playWhenReady = () => {
           video.play().catch((error) => {
             console.log('Autoplay prevented:', error);
+            // Show controls if autoplay fails (common on mobile)
+            setShowControls(true);
           });
         };
         video.addEventListener('canplay', playWhenReady, { once: true });
@@ -91,6 +96,7 @@ function GalleryItem({ item, isReversed }) {
               preload="auto"
               poster={item.poster}
               webkit-playsinline="true"
+              controls={showControls}
             />
           ) : (
             <img 
