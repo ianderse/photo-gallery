@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import ImageStrip from './ImageStrip';
 import './Gallery.css';
 
 function isVideo(src) {
@@ -9,7 +10,7 @@ function isVideo(src) {
   return videoExtensions.some(ext => lowercaseSrc.includes(ext));
 }
 
-function GalleryItem({ item, isReversed }) {
+function GalleryItem({ item, isReversed, userHasScrolled }) {
   const ref = useRef(null);
   const videoRef = useRef(null);
   const [showControls, setShowControls] = useState(false); // Hide controls initially, show if autoplay fails
@@ -23,6 +24,10 @@ function GalleryItem({ item, isReversed }) {
     const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     setIsMobile(mobile);
     console.log('Is mobile:', mobile);
+    // Show controls on mobile initially
+    if (mobile) {
+      setShowControls(true);
+    }
     if (isVideoMedia) {
       console.log('Video item.image:', item.image);
     }
@@ -58,7 +63,7 @@ function GalleryItem({ item, isReversed }) {
     video.addEventListener('loadedmetadata', handleLoadedMetadata);
     video.addEventListener('loadeddata', handleLoadedData);
 
-    if (isInView) {
+    if (isInView && userHasScrolled) {
       console.log('Video in view, readyState:', video.readyState);
 
       // Load the video if not already loaded (important for mobile)
@@ -103,7 +108,7 @@ function GalleryItem({ item, isReversed }) {
       video.removeEventListener('loadedmetadata', handleLoadedMetadata);
       video.removeEventListener('loadeddata', handleLoadedData);
     };
-  }, [isInView, isVideoMedia, isMobile]);
+  }, [isInView, isVideoMedia, isMobile, userHasScrolled]);
 
   const imageVariants = {
     hidden: { opacity: 0, scale: 1.02 },
@@ -172,7 +177,23 @@ function GalleryItem({ item, isReversed }) {
   );
 }
 
-function Gallery({ items, title, subtitle }) {
+function Gallery({ items, title, subtitle, stripItems }) {
+  const [userHasScrolled, setUserHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!userHasScrolled) {
+        setUserHasScrolled(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [userHasScrolled]);
+
   return (
     <div className="gallery">
       {(title || subtitle) && (
@@ -183,12 +204,15 @@ function Gallery({ items, title, subtitle }) {
         </header>
       )}
 
+      {stripItems && stripItems.length > 0 && <ImageStrip items={stripItems} />}
+
       <div className="gallery__items">
         {items.map((item, index) => (
-          <GalleryItem 
+          <GalleryItem
             key={item.id || index}
             item={item}
             isReversed={index % 2 === 1}
+            userHasScrolled={userHasScrolled}
           />
         ))}
       </div>

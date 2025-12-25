@@ -1,0 +1,102 @@
+.image-strip {
+  width: 100%;
+  padding: 3rem 0;
+  overflow: hidden;
+}
+
+.image-strip__container {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  justify-content: center;
+}
+
+.image-strip__container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.image-strip__container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.image-strip__container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.image-strip__container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.image-strip__item {
+  position: relative;
+  flex-shrink: 0;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+.image-strip__item:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.image-strip__thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-strip__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-strip__item:hover .image-strip__overlay {
+  opacity: 1;
+}
+
+.image-strip__overlay svg {
+  color: white;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+@media (max-width: 768px) {
+  .image-strip {
+    padding: 2rem 0;
+  }
+
+  .image-strip__container {
+    padding: 0 1rem;
+    gap: 1rem;
+  }
+
+  .image-strip__item {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .image-strip__item {
+    width: 120px;
+    height: 120px;
+  }
+}

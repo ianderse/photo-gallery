@@ -17,22 +17,53 @@
 
 export const galleryConfig = {
   // Gallery header - set to null to hide
-  title: "A Curated Collection",
+  title: "Zoe - 2025",
   subtitle: "Selected Works",
 };
+
+// Image strip items - appears as horizontal scrollable thumbnails under the header
+// Separate from the main gallery items
+export const imageStripItems = [
+  {
+    id: 'strip-1',
+    image: "/photos/real/1.JPEG",
+  },
+  {
+    id: 'strip-2',
+    image: "/photos/real/2.JPEG",
+  },
+  {
+    id: 'strip-3',
+    image: "/photos/real/3.JPEG",
+  },
+  {
+    id: 'strip-4',
+    image: "/photos/real/4.JPEG",
+  },
+  {
+    id: 'strip-5',
+    image: "/photos/real/5.JPEG",
+  },
+  {
+    id: 'strip-6',
+    image: "/photos/real/6.JPEG",
+  },
+];
 
 export const galleryItems = [
   {
     id: 1,
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
-    title: "Alpine Serenity",
-    description: "The first light of dawn breaks across the jagged peaks, painting the sky in gradients of rose and amber. In these quiet moments before the world awakens, the mountains hold an ancient silence."
+    image: "/videos/nobelpeaceprize.mp4",
+    title: "Nobel Peace Prize",
+    description: "Zoe is presented with the 'Nobel Peace Prize', as the crowd looks on and applauds. Zoe was instrumental in the efforts to end nine wars in 2025, much to the chagrin of others who only ended eight wars.",
+    poster: "/photos/nobelpeaceprize.jpg"
   },
   {
     id: 2,
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80",
-    title: "Portrait Study",
-    description: "Natural light filtering through linen curtains creates soft, diffused illumination. The interplay of shadow and highlight reveals character in ways harsh light never could."
+    image: "/videos/mountain.mp4",
+    title: "Summiting Mount Everest",
+    description: "Zoe summits Mount Everest. Zoe was the first baby to summit the mountain without an oxygen tank.",
+    poster: "/pictures/mountain.jpg"
   },
   {
     id: 3,
@@ -40,19 +71,21 @@ export const galleryItems = [
     image: "/videos/rockstar.mp4",
     title: "Motion Study",
     description: "Movement captured in time, a fleeting moment preserved. Video content autoplays when scrolled into view and pauses when you scroll away.",
-    poster: ""
+    poster: "/pictures/rockstar.jpg"
   },
   {
     id: 4,
-    image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200&q=80",
-    title: "Coastal Minimalism",
-    description: "Where the ocean meets the shore, there exists a liminal space of constant transformation. Each wave erases and rewrites the story of the sand, a meditation on impermanence."
+    image: "/videos/cutestbaby.mp4",
+    title: "Motion Study",
+    description: "Movement captured in time, a fleeting moment preserved. Video content autoplays when scrolled into view and pauses when you scroll away.",
+    poster: "/pictures/cutestbaby.jpg"
   },
   {
     id: 5,
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200&q=80",
-    title: "Golden Hour Fields",
-    description: "Rolling hills stretch toward the horizon, each undulation catching the warm afternoon light differently. The cypress trees stand as sentinels, unchanged for centuries."
+    image: "/videos/formulaone.mp4",
+    title: "Motion Study",
+    description: "Movement captured in time, a fleeting moment preserved. Video content autoplays when scrolled into view and pauses when you scroll away.",
+    poster: "/pictures/formulaone.jpg"
   },
   {
     id: 6,
