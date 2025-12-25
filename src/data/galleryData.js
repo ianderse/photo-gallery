@@ -63,34 +63,34 @@ export const galleryItems = [
     image: "/videos/mountain.mp4",
     title: "Summiting Mount Everest",
     description: "Zoe summits Mount Everest. Zoe was the first baby to summit the mountain without an oxygen tank.",
-    poster: "/pictures/mountain.jpg"
+    poster: "/photos/mountain.jpg"
   },
   {
     id: 3,
-    // Example video - replace with your own .mp4 URL
     image: "/videos/rockstar.mp4",
-    title: "Motion Study",
-    description: "Movement captured in time, a fleeting moment preserved. Video content autoplays when scrolled into view and pauses when you scroll away.",
-    poster: "/pictures/rockstar.jpg"
+    title: "Zoe headlining Coachella",
+    description: "Lady Gaga remarked, 'It is not just her skill—Zoe is obviously the best guitar player of her generation, but her incredible stage presence commands the attention of thousands without her saying a word.'",
+    poster: "/photos/rockstar.jpg"
   },
   {
     id: 4,
     image: "/videos/cutestbaby.mp4",
     title: "Motion Study",
     description: "Movement captured in time, a fleeting moment preserved. Video content autoplays when scrolled into view and pauses when you scroll away.",
-    poster: "/pictures/cutestbaby.jpg"
+    poster: "/photos/cutestbaby.jpg"
   },
   {
     id: 5,
     image: "/videos/formulaone.mp4",
     title: "Motion Study",
     description: "Movement captured in time, a fleeting moment preserved. Video content autoplays when scrolled into view and pauses when you scroll away.",
-    poster: "/pictures/formulaone.jpg"
+    poster: "/photos/formulaone.jpg"
   },
   {
     id: 6,
-    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80",
-    title: "Mist & Mountains",
-    description: "Fog drifts through the valley like memories, revealing and concealing the ancient forest in turn. There's a profound stillness here, broken only by the distant call of ravens."
+    image: "/videos/moremilk.mp4",
+    title: "More Milk Now Protests",
+    description: "Fog drifts through the valley like memories, revealing and concealing the ancient forest in turn. There's a profound stillness here, broken only by the distant call of ravens.",
+    poster: "/photos/moremilk.jpg"
   }
 ];

@@ -24,14 +24,14 @@ function GalleryItem({ item, isReversed, userHasScrolled }) {
     const mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     setIsMobile(mobile);
     console.log('Is mobile:', mobile);
-    // Show controls on mobile initially
-    if (mobile) {
+    // Show controls on mobile initially since autoplay is unreliable
+    if (mobile && isVideoMedia) {
       setShowControls(true);
     }
     if (isVideoMedia) {
       console.log('Video item.image:', item.image);
     }
-  }, []);
+  }, [isVideoMedia]);
 
   // Handle video autoplay based on visibility
   useEffect(() => {
@@ -72,23 +72,41 @@ function GalleryItem({ item, isReversed, userHasScrolled }) {
         video.load();
       }
 
+      // On mobile, always show controls and try to play anyway
+      if (isMobile) {
+        setShowControls(true);
+      }
+
+      // Function to attempt play with better error handling
+      const attemptPlay = () => {
+        const playPromise = video.play();
+
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log('Video playing successfully');
+              // On successful autoplay on mobile, we can hide controls
+              if (isMobile && !showControls) {
+                setShowControls(false);
+              }
+            })
+            .catch((error) => {
+              console.log('Autoplay prevented:', error.name, error.message);
+              // Show controls if autoplay fails
+              setShowControls(true);
+            });
+        }
+      };
+
       // Attempt autoplay on both desktop and mobile (videos are muted)
       // Ensure video is ready before playing
-      if (video.readyState >= 3) {
+      if (video.readyState >= 2) {
         console.log('Video ready, attempting play...');
-        video.play().catch((error) => {
-          console.log('Autoplay prevented:', error);
-          // Show controls if autoplay fails (mainly for first video on mobile)
-          setShowControls(true);
-        });
+        attemptPlay();
       } else {
         const playWhenReady = () => {
           console.log('Video canplay event fired, attempting play...');
-          video.play().catch((error) => {
-            console.log('Autoplay prevented:', error);
-            // Show controls if autoplay fails (mainly for first video on mobile)
-            setShowControls(true);
-          });
+          attemptPlay();
         };
         video.addEventListener('canplay', playWhenReady, { once: true });
 
@@ -145,9 +163,12 @@ function GalleryItem({ item, isReversed, userHasScrolled }) {
               ref={videoRef}
               className="gallery-item__media gallery-item__video"
               muted
+              defaultMuted
               loop
               playsInline
-              preload="auto"
+              webkit-playsinline="true"
+              preload="metadata"
+              poster={item.poster}
               controls={showControls}
             >
               <source src={item.image} type="video/mp4" />
