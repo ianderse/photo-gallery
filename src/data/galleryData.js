@@ -83,7 +83,7 @@ export const galleryItems = [
     id: 5,
     image: "/videos/formulaone.mp4",
     title: "Formula 0.5 - Zoe's final championship lap",
-    description: "Max Verstappen had this to say about Zoe, 'Wow, her sheer grit and determination saw her easily win the F0.5 championship. I just cound myself lucky that I will be retired by the time her feet can reach the pedals of a full size car, I would never win again racing against her.",
+    description: "Max Verstappen had this to say about Zoe, 'Wow, her sheer grit and determination saw her easily win the F0.5 championship. I just count myself lucky that I will be retired by the time her feet can reach the pedals of a full size car, I would never win again racing against her.",
     poster: "/photos/formulaone.jpg"
   },
   {
