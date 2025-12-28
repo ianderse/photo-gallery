@@ -18,7 +18,7 @@
 export const galleryConfig = {
   // Gallery header - set to null to hide
   title: "Zoe - 2025",
-  subtitle: "Selected Works",
+  subtitle: "A Baby Life",
 };
 
 // Image strip items - appears as horizontal scrollable thumbnails under the header
