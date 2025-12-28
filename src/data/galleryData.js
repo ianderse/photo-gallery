@@ -75,22 +75,29 @@ export const galleryItems = [
   {
     id: 4,
     image: "/videos/cutestbaby.mp4",
-    title: "Motion Study",
-    description: "Movement captured in time, a fleeting moment preserved. Video content autoplays when scrolled into view and pauses when you scroll away.",
+    title: "Cutest Baby 2025",
+    description: "Zoe won the cutest baby of the year award with a unanimous decision.",
     poster: "/photos/cutestbaby.jpg"
   },
   {
     id: 5,
     image: "/videos/formulaone.mp4",
-    title: "Motion Study",
-    description: "Movement captured in time, a fleeting moment preserved. Video content autoplays when scrolled into view and pauses when you scroll away.",
+    title: "Formula 0.5 - Zoe's final championship lap",
+    description: "Max Verstappen had this to say about Zoe, 'Wow, her sheer grit and determination saw her easily win the F0.5 championship. I just cound myself lucky that I will be retired by the time her feet can reach the pedals of a full size car, I would never win again racing against her.",
     poster: "/photos/formulaone.jpg"
   },
   {
     id: 6,
     image: "/videos/moremilk.mp4",
     title: "More Milk Now Protests",
-    description: "Fog drifts through the valley like memories, revealing and concealing the ancient forest in turn. There's a profound stillness here, broken only by the distant call of ravens.",
+    description: "Zoe led the 'More Milk Now' movement, and she did in fact get more milk in the end.",
     poster: "/photos/moremilk.jpg"
+  },
+  {
+    id: 7,
+    image: "/videos/ceo.mp4",
+    title: "Fortune 500 CEO of the year",
+    description: "Zoe was named 'CEO of the Year' for delivering consistent shareholder value while also having the highest employee satisfaction score in the country.",
+    poster: "/photos/ceo.jpg"
   }
 ];
