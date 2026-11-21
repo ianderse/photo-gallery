@@ -1,0 +1,44 @@
+/* Global styles the original 2025 site relied on, scoped to its wrapper so
+   they don't leak into newer years. Keep this file frozen. */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap');
+
+html.is-legacy-2025,
+html.is-legacy-2025 body {
+  background-color: #f8f7f4;
+}
+
+.legacy-2025 {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
+  background-color: #f8f7f4;
+  color: #1a1a1a;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.legacy-2025 ::selection {
+  background-color: #2d2d2d;
+  color: #f8f7f4;
+}
+
+.legacy-2025__home {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 50;
+  padding: 0.55rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(26, 26, 26, 0.85);
+  color: #f8f7f4;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  backdrop-filter: blur(6px);
+  transition: background-color 0.2s ease;
+}
+
+.legacy-2025__home:hover {
+  background: #1a1a1a;
+}

@@ -142,3 +142,15 @@ photo-gallery/
 ## License
 
 MIT
+
+## Years & archive
+
+Each holiday season lives in `src/years/<year>/`, registered in `src/years/index.js` (newest first).
+The first entry is served at `/`; every other entry gets its own path (e.g. `/2025`) and is linked
+automatically from the "Past years" nav and the footer archive.
+
+- `src/years/2025/` — the original 2025 site, preserved unchanged.
+- `src/years/2026/content.js` — content for the current page, rendered by `src/modern/ModernPage.jsx`.
+
+To start a new year: change the current entry's `path` from `/` to `/<year>`, copy the latest year's
+folder, edit its `content.js`, and add the new entry at the top of the list with `path: '/'`.
