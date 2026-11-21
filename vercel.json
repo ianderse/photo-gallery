@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "holiday2025.ianandersen.net" }],
+      "destination": "https://holiday.ianandersen.net/$1",
+      "permanent": true
+    }
+  ]
+}
